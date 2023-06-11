@@ -1,0 +1,25 @@
+{
+    "id": "AA901222",
+    "path": "C:/Users/USER/Desktop/TTHsieh/2021-RProj-AutoSign/AutoSign.R",
+    "project_path": "AutoSign.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1663389784708.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "cursorPosition": "92,55",
+        "scrollLine": "69",
+        "Source": "Source"
+    },
+    "folds": "1|40|26|0|\n29|41|62|0|\n",
+    "lastKnownWriteTime": 1664361715,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1664361715282,
+    "read_only": false,
+    "read_only_alternatives": []
+}

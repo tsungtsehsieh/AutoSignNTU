@@ -1,0 +1,97 @@
+####sign in function
+sign_in <- function(account, password) {
+  
+  remDr <- remoteDriver(browserName = "chrome")
+  remDr$open(silent = T)
+  
+  #go to myntu
+  remDr$navigate("https://my.ntu.edu.tw/mattend/ssi.aspx")
+  
+  #login
+  btn1 <- remDr$findElement(using = 'xpath', value = "//*[@id='divLogin']/div/div/div/p[1]")
+  btn1$clickElement()
+  
+  btn2 <- remDr$findElement(using = 'xpath', value = "//*[@id='myTable']/td/input")
+  btn2$sendKeysToElement(list(account))
+  
+  btn3 <- remDr$findElement(using = 'xpath', value =  "//*[@id='myTable2']/td/input")
+  btn3$sendKeysToElement(list(password))
+  
+  btn4 <- remDr$findElement(using = 'xpath', value = "//*[@id='content']/form/table/tbody/tr[3]/td[2]/input")
+  btn4$clickElement()
+  
+  btn5 <- remDr$findElement(using = 'xpath', value = "//*[@id='btSign']")
+  btn5$clickElement()
+  
+  remDr$quit()
+}
+
+####sign out function
+sign_out <- function(account, password) {
+  
+  remDr <- remoteDriver(browserName = "chrome")
+  remDr$open(silent = T)
+  
+  #go to myntu
+  remDr$navigate("https://my.ntu.edu.tw/mattend/ssi.aspx")
+  
+  #login
+  btn1 <- remDr$findElement(using = 'xpath', value = "//*[@id='divLogin']/div/div/div/p[1]")
+  btn1$clickElement()
+  
+  btn2 <- remDr$findElement(using = 'xpath', value = "//*[@id='myTable']/td/input")
+  btn2$sendKeysToElement(list(account))
+  
+  btn3 <- remDr$findElement(using = 'xpath', value = "//*[@id='myTable2']/td/input")
+  btn3$sendKeysToElement(list(password))
+  
+  btn4 <- remDr$findElement(using = 'xpath', value = "//*[@id='content']/form/table/tbody/tr[3]/td[2]/input")
+  btn4$clickElement()
+  
+  #######
+  #btn7 <- remDr$findElement(using = 'xpath', value = "//*[@id='btOtAgr']")
+  #btn7$clickElement()
+  
+  #remDr$acceptAlert()
+  #######
+  
+  btn6 <- remDr$findElement(using = 'xpath', value = "//*[@id='btSign2']")
+  btn6$clickElement()
+  
+  remDr$quit()
+
+}
+
+####read account data
+user <- read.table("user.txt", header = T)
+
+####system environment setting
+Sys.setlocale("LC_TIME", "English")
+Sys.setenv(LANG = "en")
+
+library(RSelenium)
+
+signinminute <- paste("08 0", sample(0:4, 1), sep = "")
+signoutminute <- paste("17 0", sample(5:9, 1), sep = "")
+
+####signing loops
+repeat {
+  
+  if (format(Sys.time(), "%u") %in% 1:5) {
+    
+    if(format(Sys.time(), "%H %M") == "00 00") {
+      signinminute <- paste("08 0", sample(0:4, 1), sep = "")
+      signoutminute <- paste("17 0", sample(5:9, 1), sep = "")
+    }
+    
+    if (format(Sys.time(), "%H %M") == signinminute) {
+      mapply(sign_in, user$account, user$password)
+    }
+    
+    if (format(Sys.time(), "%H %M") == signoutminute) {
+      mapply(sign_out, user$account, user$password)
+    }
+  }
+  
+  Sys.sleep(60)
+}
